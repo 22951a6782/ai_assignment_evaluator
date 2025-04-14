@@ -133,3 +133,32 @@ The `templates/` folder contains the HTML files used to render content for the u
 - The student logs in and can see all assignments assigned to them.
 - They can submit assignments through a dedicated form.
 - After submission, they can view the status of their submission and check their grades once the teacher has graded it.
+
+## Installation
+
+To run this project locally, follow these steps:
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/yourusername/ai_assignment_evaluator.git
+   ```
+
+2. **Navigate to the Project Directory**:
+   ```bash
+   cd aigrader
+   ```
+
+
+3. **Run the Python Backend**:
+   ```bash
+   python app.py
+   ```
+## License
+
+This project is licensed under the MIT License. See the [License](https://github.com/22951a6782/ai_assignment_evaluator/blob/main/LICENSE) file for details.
+
+## Contact
+
+For further information or queries, please reach out via email at [peralapranitha17@gmail.com](mailto:peralapranitha17@gmail.com).  
+Feel free to connect with me on LinkedIn - [LinkedIn](https://www.linkedin.com/in/pranitha-perala-400670317/).
+
