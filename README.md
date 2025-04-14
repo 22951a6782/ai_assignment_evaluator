@@ -1,4 +1,4 @@
-# AI ASSIGNMENT EVALUATOR SYSTEM
+# AI-Based Automated Homework Grader
 
 ## **Purpose**
 The Assignment Submission and Grading System is designed to manage assignments, submissions, and grading for educational institutions, facilitating interaction between students and teachers. It provides a platform for students to submit their assignments (both coding and theory-based), while enabling teachers to view, grade, and manage these submissions efficiently.
