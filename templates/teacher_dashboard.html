@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f7f7f7; padding: 20px; }
+    h2, h3 { color: #333; }
+    .assignment, .submission {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    input, textarea {
+      width: 100%;
+      margin: 6px 0;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+    }
+    button {
+      padding: 8px 16px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    pre {
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h2>Teacher Dashboard</h2>
+
+  <!-- Coding Assignment Section -->
+  <div class="assignment">
+    <h3>Create New Coding Assignment</h3>
+    <form method="POST" action="/create_assignment">
+      <input type="text" name="title" placeholder="Assignment Title" required>
+      <textarea name="description" placeholder="Assignment Description" required></textarea>
+      <textarea name="testcases" placeholder="Enter testcases as JSON: [{\"input\": \"2\\n3\", \"output\": \"5\"}]" required></textarea>
+      <button type="submit">Add Assignment</button>
+    </form>
+  </div>
+
+  <!-- Theory Assignment Section -->
+  <div class="assignment">
+    <h3>Create New Theory Assignment</h3>
+    <form method="POST" action="/create_theory_assignment">
+      <input type="text" name="title" placeholder="Assignment Title" required>
+      <textarea name="questions" placeholder="Enter questions (separate by newline)" required></textarea>
+      <textarea name="answers" placeholder="Enter answers (separate by newline, in same order)" required></textarea>
+      <button type="submit">Add Theory Assignment</button>
+    </form>
+  </div>
+
+  <h2>Your Created Assignments</h2>
+  <ul>
+    {% for a in assignments %}
+      <li>
+        <strong>{{ a.title }}</strong><br>
+        <small>{{ a.description }}</small><br>
+        <a href="{{ url_for('view_submissions', assignment_id=a.id) }}">
+          <button>View Submissions</button>
+        </a>
+      </li>
+      <form action="{{ url_for('delete_assignment', assignment_id=a.id) }}" method="POST" style="display:inline;">
+        <button type="submit" onclick="return confirm('Are you sure you want to delete this assignment?')">Delete</button>
+      </form>
+    {% else %}
+      <li>No assignments created yet.</li>
+    {% endfor %}
+  </ul>
+  <ul>
+    {% for a in theory_assignments %}
+      <li>
+        <strong>{{ a.title }}</strong><br>
+        <small>{{ a.description }}</small><br>
+        <a href="{{ url_for('view_theory_submissions', assignment_id=a.id) }}">
+          <button>View Submissions</button>
+        </a>
+      </li>
+      <form action="{{ url_for('delete_theory_assignment', assignment_id=a.id) }}" method="POST" style="display:inline;">
+        <button type="submit" onclick="return confirm('Are you sure you want to delete this assignment?')">Delete</button>
+      </form>
+    {% else %}
+      <li>No assignments created yet.</li>
+    {% endfor %}
+  </ul>
+
+  <hr>
+
+  <a href="/logout" style="float: right; padding: 10px; background: crimson; color: white; text-decoration: none;">Logout</a>
+
+</body>
+</html>

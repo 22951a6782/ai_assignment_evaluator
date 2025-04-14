@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grade Submission</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+
+    <h2 class="mb-4">Grade Submission for "{{ submission.title }}"</h2>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>Submitted Code:</strong>
+        </div>
+        <div class="card-body">
+            <pre style="white-space: pre-wrap;">{{ submission.code }}</pre>
+        </div>
+        <div class="card-footer text-muted">
+            Submitted at: {{ submission.submitted_at }}
+        </div>
+    </div>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="grade">Grade:</label>
+            <input type="number" min="0" max="100" class="form-control" id="grade" name="grade" value="{{ submission.grade or '' }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Grade</button>
+        <a href="/teacher_dashboard" class="btn btn-secondary ml-2">Cancel</a>
+    </form>
+
+</body>
+</html>

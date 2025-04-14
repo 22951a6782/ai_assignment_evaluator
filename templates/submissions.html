@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Submissions for: {{ assignment.title }}</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">{{ assignment.title }}</h5>
+        <p class="card-text">{{ assignment.description }}</p>
+        <pre>{{ assignment.questions }}</pre>
+    </div>
+</div>
+
+<h3>Student Submissions</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Submitted At</th>
+            <th>Code</th>
+            <th>Grade</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for submission in submissions %}
+        <tr>
+            <td>{{ submission.student_username }}</td>
+            <td>{{ submission.submitted_at }}</td>
+            <td>
+                <button class="btn btn-sm btn-info" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#code-{{ submission.id }}">
+                    View Code
+                </button>
+                <div class="collapse" id="code-{{ submission.id }}">
+                    <pre class="mt-2">{{ submission.code }}</pre>
+                </div>
+            </td>
+            <td>
+                {% if submission.grade %}
+                    {{ submission.grade }}
+                {% else %}
+                    <form method="POST" action="{{ url_for('grade_submission', submission_id=submission.id) }}">
+                        <input type="text" name="grade" class="form-control form-control-sm d-inline" style="width: 60px;">
+                        <button type="submit" class="btn btn-sm btn-success">Grade</button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('teacher_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+{% endblock %}

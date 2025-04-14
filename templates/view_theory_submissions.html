@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submissions - {{ assignment.title }}</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #aaa;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h2>Submissions for: {{ assignment.title }}</h2>
+
+    {% if submissions %}
+    <table>
+        <tr>
+            <th>Student Name</th>
+            <th>Submitted Answers</th>
+            <th>Grade</th>
+            <th>Submitted At</th>
+        </tr>
+        {% for s in submissions %}
+        <tr>
+            <td>{{ s.student_name }}</td>
+            <td><pre>{{ s.answers | e }}</pre></td>
+            <td>{{ s.grade or 'Not graded yet' }}</td>
+            <td>{{ s.submitted_at }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No submissions yet for this assignment.</p>
+    {% endif %}
+
+    <br>
+    <a href="/teacher/dashboard">← Back to Dashboard</a>
+</body>
+</html>

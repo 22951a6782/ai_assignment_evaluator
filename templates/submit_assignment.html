@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Submit Assignment: {{ assignment.title }}</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">{{ assignment.title }}</h5>
+        <p class="card-text">{{ assignment.description }}</p>
+        <pre>{{ assignment.questions }}</pre>
+    </div>
+</div>
+
+<form method="POST" enctype="multipart/form-data">
+    {% if assignment.assignment_type == 'coding' %}
+        <div class="mb-3">
+            <label for="code" class="form-label">Your Code</label>
+            <textarea class="form-control" id="code" name="code" rows="10" required></textarea>
+        </div>
+    {% elif assignment.assignment_type == 'written' %}
+        <div class="mb-3">
+            <label for="pdf" class="form-label">Upload PDF</label>
+            <input class="form-control" type="file" id="pdf" name="pdf" accept=".pdf" required>
+        </div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="{{ url_for('student_dashboard') }}" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% if assignment.test_cases %}
+<div class="mt-4">
+    <h4>Test Cases</h4>
+    <pre>{{ assignment.test_cases | tojson(indent=2) }}</pre>
+</div>
+{% endif %}
+{% endblock %}

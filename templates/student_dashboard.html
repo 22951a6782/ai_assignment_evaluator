@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef6ff;
+      padding: 20px;
+    }
+    h2 {
+      color: #003f7f;
+    }
+    .assignment {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    textarea {
+      width: 100%;
+      height: 120px;
+      margin-top: 10px;
+      font-family: monospace;
+    }
+    button {
+      margin-top: 8px;
+      padding: 6px 14px;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #ccc;
+    }
+    .grade {
+      margin-top: 10px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h2>Welcome, {{ session['name'] }}</h2>
+  <h3>Available Assignments</h3>
+
+  {% for a in assignments %}
+    <div class="assignment">
+      <strong>{{ a.title }}</strong><br>
+      <p>{{ a.description }}</p>
+
+      <form action="/submit/{{ a.id }}" method="post">
+        <label><strong>Write your Python code below:</strong></label><br>
+        <textarea name="code" placeholder="Define a function named solution()..."></textarea>
+        <button type="submit">Submit</button>
+      </form>
+      
+      {% set shown = false %}
+      {% for sub in all_submissions %}
+        {% if sub.assignment_id == a.id %}
+          {% if not shown %}
+            <h4>Previous Submissions:</h4>
+            {% set shown = true %}
+          {% endif %}
+          <div style="background: #f7f7f7; padding: 8px; margin-top: 8px; border-left: 3px solid #0077cc;">
+            <strong>Submitted:</strong> {{ sub.submitted_at }}<br>
+            <strong>Grade:</strong> {{ sub.grade }}%<br>
+            <pre style="white-space: pre-wrap;">{{ sub.code }}</pre>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endfor %}
+
+  <h3>Theory Assignments</h3>
+
+  {% for t in theory_assignments %}
+    <div class="assignment">
+      <strong>{{ t.title }}</strong><br>
+      <h4>Questions:</h4>
+      <pre style="white-space: pre-wrap;">{{ t.questions }}</pre>
+
+      <form action="/submit_theory/{{ t.id }}" method="post">
+        <label><strong>Your Answers:</strong></label><br>
+        <textarea name="answers" placeholder="Write your answers here..." required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+
+      {% set theory_shown = false %}
+      {% for sub in all_theory_submissions %}
+        {% if sub.theory_assignment_id == t.id %}
+          {% if not theory_shown %}
+            <h4>Previous Submission:</h4>
+            {% set theory_shown = true %}
+          {% endif %}
+          <div style="background: #f7f7f7; padding: 8px; margin-top: 8px; border-left: 3px solid #0077cc;">
+            <strong>Submitted:</strong> {{ sub.submitted_at }}<br>
+            <pre style="white-space: pre-wrap;">{{ sub.answers }}</pre>
+            <strong>Grade:</strong> {{ sub.grade }}%
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endfor %}
+
+  <a href="/logout" style="float: right; padding: 10px; background: crimson; color: white; text-decoration: none;">Logout</a>
+
+</body>
+</html>

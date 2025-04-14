@@ -1,0 +1,16 @@
+<h2>Grade Theoretical Submission</h2>
+<form method="POST">
+    <div class="form-group">
+        <label for="student_name">Student</label>
+        <input type="text" class="form-control" id="student_name" value="{{ submission.student_name }}" disabled>
+    </div>
+    <div class="form-group">
+        <label for="answers">Student Answers</label>
+        <textarea class="form-control" id="answers" rows="10" disabled>{{ submission.answers }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="grade">Grade</label>
+        <input type="number" class="form-control" id="grade" name="grade" min="0" max="100" value="{{ submission.grade }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Grade</button>
+</form>
